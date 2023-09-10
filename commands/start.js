@@ -21,15 +21,21 @@ const verificationProcesses = {};
 module.exports = async function handleStart(msg) {
     const chatId = msg.chat.id;
 
+    const user = await User.findOne({ where: { chatId: chatId } });
+    
+    if (user) {
+        // Handle case where user is found in the database
+        bot.sendMessage(chatId, `Такс, похоже вы уже зарегестрированы.`);
+        return;
+    }
+
+    // Начало регистрации
     if (!verificationProcesses[chatId]) {
         verificationProcesses[chatId] = { step: 'email', code: generateCode() };
 
         bot.sendMessage(chatId,
-            `
-        Привет! Я - чат-бот НИТУ МИСИС для поиска study-buddy!
-
-        Я буду твоим проводником к новым знакомствам в университете.
-        `);
+            `Привет! Я - чат-бот НИТУ МИСИС для поиска study-buddy!\nЯ буду твоим проводником к новым знакомствам в университете.`
+        );
     } else { return }
 
     const process = verificationProcesses[chatId];
@@ -48,13 +54,15 @@ module.exports = async function handleStart(msg) {
         }
     };
 
-    // Вместо использования transporter.sendMail внутри функции handleStart, используйте функцию sendEmail:
-
     const handleEmail = () => {
         return new Promise((resolve, reject) => {
             bot.sendMessage(chatId, "Давай начнем с регистрации! Пожалуйста, введи адрес корпоративной почты МИСИС:");
 
             bot.once('message', (msg) => {
+                if (msg.from.id != chatId) {
+                    
+                }
+
                 process.email = msg.text;
 
                 let emailRegex = /^[a-zA-Z0-9._%+-]+@edu\.misis\.ru$/;

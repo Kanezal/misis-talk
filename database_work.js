@@ -12,6 +12,7 @@ class User extends Model { }
 User.init({
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     chatId: { type: DataTypes.STRING, allowNull: false, unique: true },
+    group: DataTypes.STRING,
     skills: DataTypes.STRING,
     preferences: DataTypes.STRING,
 }, {

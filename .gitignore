@@ -131,3 +131,4 @@ dist
 
 # My story
 config.dev.json
+database.sqlite
