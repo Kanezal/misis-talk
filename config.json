@@ -1,0 +1,7 @@
+{
+    "you_need_to_rename_this_file_to": "config.dev.json",
+    "API_TOKEN": "your_token_goes_here",
+    
+    "GMAIL_USER": "here_goes_your_account_that_do_auth_code",
+    "GMAIL_PASS": ""
+}
